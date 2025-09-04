@@ -1,4 +1,4 @@
-# 🧬 QB25 Bootcamp Answers
+# 🧬 QB25 Bootcamp
 *Alan Wang – Johns Hopkins CMDB PhD Student*  
 
 ---
