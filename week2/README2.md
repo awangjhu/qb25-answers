@@ -1,0 +1,1 @@
+Based on the alignment in IGV, sequences A01_02.bam, A01_05.bam, and A01_06.bam have the most elevated mismatches rates from ~20kb to ~26 kb. However, all the coverages have strong mismatch density from ~27kb to ~39kb.
