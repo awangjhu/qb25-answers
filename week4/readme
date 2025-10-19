@@ -1,0 +1,50 @@
+2.2:  1. What is the size (i.e., slope) of this relationship? Interpret the slope in plain language. Does it match your plot? 2. Is the relationship significant? How do you know? Explain the p-value in plain but precise language.
+  term         estimate std.error statistic  p.value
+  <chr>           <dbl>     <dbl>     <dbl>    <dbl>
+1 (Intercept)     2.50     0.981       2.55 1.10e- 2
+2 maternal_age    0.378    0.0351     10.8  6.88e-24
+Answer: The approximate slope is 0.378 which means as the maternal ages increase, the expected increase is about 0.38 DNMs. I would argue that it indeed aligns with the upward trend in the scatter plot. The p-value is 6.88e-24 which is far below 0.05, meaning the relationship between maternal age and maternal DMN count is very statistically significant.
+
+2.3 (Same as above but for paternal)
+  term         estimate std.error statistic  p.value
+  <chr>           <dbl>     <dbl>     <dbl>    <dbl>
+1 (Intercept)     10.3     1.70        6.07 3.08e- 9
+2 paternal_age     1.35    0.0535     25.3  1.55e-84
+Answer: The slope is 1.35 which means that as the paternal age increases, the expected increase is about 1.35 paternal DNM. This is definitely greater than the maternal slope and is also reflected in the scatter plot as it shows a strong positive linear trend. The p-value is 1.55e-84 which is also far below 0.05. This means there is extreme significant relationship between paternal age and DNM count.
+
+2.4: Use the paternal regression model to predict the expected number of paternal DNMs for a father of age 50.5. You are welcome to do this manually or using a built-in function, but show your work in README.md.
+       fit      lwr      upr
+1 78.69546 76.45928 80.93164
+Work shown (manually):
+y^​=β0​+β1​×paternal_age
+β0​=10.3,β1​=1.35
+y^​(50.5)=10.3+1.35×50.5=10.3+68.175=78.475≈78.5 (close to the 78.7 from the regression model)
+Answer: For a 50.5 year old father, the model predicts 78.7 paternal DNMs with a 95% confidence interval; the true difference is between 76.5-80.9.
+
+2.6: 1. What is the “size” of this relationship (i.e., the average difference in counts of maternal and paternal DNMs)? Interpret the difference in plain language. Does it match your plot? 2. Is the relationship significant? How do you know? Explain the p-value in plain but precise language.
+data:  merged$maternal_dnm and merged$paternal_dnm
+t = -61.609, df = 395, p-value < 2.2e-16
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ -40.48685 -37.98284
+sample estimates:
+mean difference 
+      -39.23485 
+Answer: The difference between the paternal and maternal DNM counts per probound seems to be 39.23 DMN with a 95% confidence interval. What this suggests is that the parental DNM are on average have 39 higher counts than maternal which is clearly also depicted on the histogram. The p-value from the paired t-test is 2.2e-16 which means the difference is statistically signficant. I know this by looking at the intercept linear model which has the same estimate at 39.23 which means that the DNM difference is around 39 counts.
+
+Exercise 3:
+3.1: I picked Pokemon from tidytuesday:https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-04-01/readme.md
+
+3.2: I wanted to take a look at two things, especially relevant in comeptitive Pokemon:
+a. Speed vs Attack Trade off: This plot is noisy but shows a positive correlation in the Pokemon Attack and Speed stat. Although some Pokemon are fast sweepers and excel in both stats (I guess the game intentially created this architype of Pokemon, potentially legendary Pokemon or very hard to catch mons), there is also noticible spread between those who hit hard or move fast to likely balance the game and a tradeoff between hitting hard and moving fast (ie. speedy glass cannons vs bulky attackers).
+b. Total Base stat vs Weight
+Total base stat is calculated: HP + Attack + Defense + Special Attack + Special Defense + Speed.
+There seems to bea. clear positive relationship between the log(weight) and total base stats. Heavier Pokemon have higher base stats a majority of the time, which is very similar to how legendary and psuedo-legendaries are deisgned since they are usually quite heavy. However, the spread also shows that heavy Pokemon seem to be rarer and cluster in the same regions.
+
+3.3: Hypothesis: I tested whether heavier Pokemon have higher base stats. I fit a linear regression model, with the following:
+total base stats=β0​+β1​×log10​(weight)
+  term          estimate std.error statistic   p.value
+  <chr>            <dbl>     <dbl>     <dbl>     <dbl>
+1 (Intercept)      310.       7.00      44.3 3.28e-233
+2 log10(weight)     92.4      4.55      20.3 2.53e- 76
+The estimated slope was 92.4 with a p-value of 2.53e-76 which means there is a signficant positive relationship. For every 10 fold increase in weight, the base stats increase by 92 on average. This observation makes it quite clear that many heavier Pokemon tend to be considered overpowered or powerhouses in competitive play because they have such a large stat pool. I would probably take a look at if this actually correlates to win% in competitive pokemon and see if it does impact battle performance.
