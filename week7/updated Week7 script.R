@@ -8,6 +8,11 @@ dat <- read.delim("/Users/cmdb/qb25-answers/week7/read_matrix.tsv", header = TRU
 mat <- as.matrix(dat)
 #Chatgpt suggested that check.names creates a cleaner loading pattern
 storage.mode(mat) <- "double"
+
+colnames(mat)[colnames(mat) == "LFC-Fe_Rep3"] <- "Fe_Rep3_temp"
+colnames(mat)[colnames(mat) == "Fe_Rep3"] <- "LFC-Fe_Rep3"
+colnames(mat)[colnames(mat) == "Fe_Rep3_temp"] <- "Fe_Rep3"
+
 gene_sd <- matrixStats::rowSds(mat) #top 500 most variant genes
 top_idx <- order(gene_sd, decreasing = TRUE)[1:500]
 mat_top <- mat[top_idx, ]
@@ -47,10 +52,6 @@ ggsave(file.path(outdir, "scree_plot_week6.png"), plot = p_scree, width = 7, hei
 #Chatgpt showed me how to save the plots safely to the week 7 folder. "outdir" is a variable that encodes holding the folder path
 
 #Exercise 2 script
-colnames(mat)[colnames(mat) == "LFC-Fe_Rep3"] <- "Fe_Rep3_temp"
-colnames(mat)[colnames(mat) == "Fe_Rep3"] <- "LFC-Fe_Rep3"
-colnames(mat)[colnames(mat) == "Fe_Rep3_temp"] <- "Fe_Rep3"
-
 samples <- colnames(mat)
 meta <- tibble(sample = samples) |>
   tidyr::separate(sample, into = c("tissue","replicate"), sep = "_", remove = FALSE)
